@@ -1,3 +1,12 @@
+import _ from "lodash";
+import * as moment from "moment";
+
+//Vue js
+import Vue from "vue";
+import VueResource from "vue-resource";
+
+//Add vue ressource to vue js (for having http support)
+Vue.use(VueResource);
 
 var app = new Vue({
     el: '#app',

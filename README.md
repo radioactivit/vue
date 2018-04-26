@@ -37,6 +37,14 @@
 ## Introduction Vue.js
 
 ## vue avec CDN dans `<script>`
+
+- Tests divers autour de la réactivité avec mise à jour en console directement avec Chrome
+- Tests autour de la MAJ d'un élément d'un tableau https://fr.vuejs.org/v2/guide/list.html#Limitations
+- Construction d'une petite appli avec addElement
+- function nécessaire dans la partie methods
+- debugger; abordé
+- CORS file:// problem
+
 ## vue avec npm
 ## vue avec webpack
 ## vue rendu par un serveur nginx
