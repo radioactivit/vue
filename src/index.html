@@ -7,10 +7,13 @@
 <body>
     <div id="app">
         <p>{{ message }}</p>
+        <p>{{reversedMessage}}</p>
+        <p>{{reversedMessageMethod()}}</p>
         <p v-for="prop in user">{{prop}}</p>
         <input v-model="user[field]" v-for="(prop,field) in user" />
+        <user-component v-bind:user="user"></user-component>
     </div>
-    <div id="app-2">
+    <!--<div id="app-2">
         <span v-bind:title="message">
             Hover your mouse over me for a few seconds to see my dynamically bound title!
         </span>
@@ -25,7 +28,7 @@
                 {{ todo.text }}
             </li>
         </ol>
-    </div>
+    </div>-->
 </body>
 
 </html>
