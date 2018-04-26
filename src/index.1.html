@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="app">
+        <button v-on:click="goBack">Retourner à la vue précédente</button>
+        <p>Compteur dans le store : {{ count }}</p>
+        <button v-on:click="increment">Incrémenter dans le store</button>
+        <p>{{ message }}</p>
+        <p>{{reversedMessage}}</p>
+        <p>{{reversedMessageMethod()}}</p>
+        <p v-for="prop in user">{{prop}}</p>
+        <input v-model="user[field]" v-for="(prop,field) in user" />
+        <user-component v-bind:user="user"></user-component>
+        <div v-bind:class="classes" role="alert">
+            A simple primary alert—check it out!
+        </div>
+        <router-link to="/old">Vieux composant</router-link>
+        <router-link to="/new">Nouveau composant</router-link>
+        <router-link :to="{name:'user',params:{id: user.id}}">
+            Aller à l'user {{user.id}}
+        </router-link>
+
+        <router-view></router-view>
+    </div>
+    <div id="appUsers" style="display:none">
+        <div v-for="user in users">
+            <router-link :to="{name:'userDetail',params:{id: user.id}}">Prénom : {{user.firstname}} ; Nom : {{user.name}}</router-link>
+        </div>
+        <router-view :key="$route.path"></router-view>
+    </div>
+    <!--<div id="app-2">
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds to see my dynamically bound title!
+        </span>
+    </div>
+    <div id="app-3">
+        <span v-if="seen">Now you see me</span>
+    </div>
+
+    <div id="app-4">
+        <ol>
+            <li v-for="todo in todos">
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>-->
+</body>
+
+</html>

@@ -1,11 +1,7 @@
 const express = require('express')
 const app = express()
 
-app.use("/static", express.static("bin"))
-
-app.get('/', function (req, res) {
-    res.send('Hello World!')
-})
+app.use("/", express.static("bin/assets/your-first-pwapp-master/final"))
 
 app.listen(80, function () {
     console.log('Listening on port 80!')

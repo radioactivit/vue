@@ -1,151 +1,86 @@
-import _ from "lodash";
-import * as moment from "moment";
-//Vue js
 import Vue from "vue";
-import VueResource from "vue-resource";
 import Vuex from 'vuex'
 import { mapState } from 'vuex'
-import VueRouter from 'vue-router'
+import Vuetify from 'vuetify'
 
-import { component as userComponent } from "./userComponent";
-import { component as userComponentVariation } from "./userComponentVariation";
-
-//Add Vuex and VueResource
-Vue.use(VueResource);
 Vue.use(Vuex);
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-    routes: [
-        { path: '/old', component: userComponent },
-        { path: '/new', component: userComponentVariation },
-        {
-            path: '/user/:id', name: "user", component: {
-                template: '<div>User id = {{ $route.params.id }}</div>'
-            }
-        }
-    ]
-});
-
-//Define components
-Vue.component("user-component", userComponent);
-Vue.component("test-component-in-component", {
-    template: "<div>Subsubsub-component</div>"
-});
+Vue.use(Vuetify);
 
 const store = new Vuex.Store({
     state: {
-        count: 0
+        count: 0,
+        firstname: "luc"
     },
     mutations: {
         increment(state) {
             state.count++
+        },
+        incrementBy(state, payload) {
+            state.count += payload.number;
+        }
+    },
+    actions: {
+        incrementAction(context) {
+            setTimeout(() => {
+                context.commit('increment')
+            }, 2000);
         }
     }
 });
-
-//array and object destructuring
-let [a, b] = [5, 2];
-let { c, d } = { c: 43, d: 67 };
-
-let myFunction = ({ firstname, name }) => {
-    console.log(firstname, name);
-};
-
-myFunction({ firstname: "luc", name: "loyant", age: 43, sex: "h" });
+store.subscribe((mutation, state) => {
+    console.log(mutation.type)
+    console.log(mutation.payload)
+});
+var mapStateCount = mapState(["count"]);
 
 var app = new Vue({
     el: '#app',
-    router,
     store,
     data: {
-        message: 'Hello Trapil!',
-        user: {
-            id: 124,
-            firstname: "jerome",
-            name: "chaaban",
-            age: 18
-        },
-        classes: ['alert']
+        dialog: false,
+        drawer: null,
+        items: [
+            { icon: 'contacts', text: 'Contacts' },
+            { icon: 'history', text: 'Frequently contacted' },
+            { icon: 'content_copy', text: 'Duplicates' },
+            {
+                icon: 'keyboard_arrow_up',
+                'icon-alt': 'keyboard_arrow_down',
+                text: 'Labels',
+                model: true,
+                children: [
+                    { icon: 'add', text: 'Create label' }
+                ]
+            },
+            {
+                icon: 'keyboard_arrow_up',
+                'icon-alt': 'keyboard_arrow_down',
+                text: 'More',
+                model: false,
+                children: [
+                    { text: 'Import' },
+                    { text: 'Export' },
+                    { text: 'Print' },
+                    { text: 'Undo changes' },
+                    { text: 'Other contacts' }
+                ]
+            },
+            { icon: 'settings', text: 'Settings' },
+            { icon: 'chat_bubble', text: 'Send feedback' },
+            { icon: 'help', text: 'Help' },
+            { icon: 'phonelink', text: 'App downloads' },
+            { icon: 'keyboard', text: 'Go to the old version' }
+        ]
     },
     methods: {
-        reversedMessageMethod: function (message) {
-            return this.message.split('').reverse().join('')
-        },
-        goBack: function () {
-            window.history.length > 1
-                ? this.$router.go(-1)
-                : this.$router.push('/')
-        },
         increment: function () {
-            debugger;
-            this.$store.commit("increment");
+            this.$store.getTodoById(4455);
+            this.$store.commit("incrementBy", { number: 10 });
         }
     },
-    computed: Object.assign({}, mapState(["count"]), {
-        // a computed getter
-        reversedMessage: function () {
-            // `this` points to the vm instance
-            return this.message.split('').reverse().join('')
+    computed: {
+        count: function () {
+            return this.$store.state.count;
         }
-    }),
-    watch: {
-        // whenever question changes, this function will run
-        message: function (newMessage, oldMessage) {
-            /*this.answer = 'Waiting for you to stop typing...'
-            this.getAnswer()*/
-        }
-    }
-});
-
-setTimeout(() => {
-    app.message = "Thanks Trapil";
-    app.classes.push('alert-primary');
-}, 2000);
-
-/*(async () => {
-    await new Promise((resolve, reject) => resolve(112));
-})();*/
-
-const users = [
-    { firstname: "luc", name: "loyant", "age": 50, "since": 2002 },
-    { firstname: "aime", name: "broohm", "age": 47, "since": 2005 },
-    { firstname: "david", name: "dellier", "age": 42, "since": 2004 },
-    { firstname: "jerome", name: "chaaban", "age": 26, "since": 2018 }
-];
-
-users.map(aUser => aUser.id = aUser.firstname + aUser.name);
-
-const userRouter = new VueRouter({
-    routes: [
-        {
-            path: "/users/:id",
-            name: "userDetail",
-            component: {
-                template: `<div>Hello {{user.id}}
-                <p v-for='prop in user'>{{prop}}</p>
-                <test-component-in-component></test-component-in-component>
-                </div>`,
-                data: function () {
-                    return {
-                        user: null
-                    }
-                },
-                created: function () {
-                    console.log("CREATED");
-                    setTimeout(() => {
-                        this.user = users.find(user => user.id === this.$route.params.id);
-                    }, 3000);
-                }
-            }
-        }
-    ]
-});
-
-var myAppUsersThatCanBeNamedWhatever = new Vue({
-    el: '#appUsers',
-    router: userRouter,
-    data: {
-        users
     }
 });

@@ -9,7 +9,7 @@ console.log(destination);
 module.exports = {
     entry: './src/script.js',
     plugins: [
-        new CleanWebpackPlugin(destination, { watch: true }),
+        new CleanWebpackPlugin(destination, { exclude: ["assets"], watch: true }),
         new HtmlWebpackPlugin({
             title: 'Caching',
             template: 'src/index.html'
