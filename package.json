@@ -1,7 +1,7 @@
 {
     "name": "formationvue",
     "version": "1.0.0",
-    "description": "Dashboard Aswat for Carrefour",
+    "description": "Formation Vue.js",
     "main": "script.js",
     "dependencies": {
         "express": "^4.16.3",
