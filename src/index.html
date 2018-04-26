@@ -7,13 +7,14 @@
 <body>
     <div id="app">
         <p>{{ message }}</p>
+        <p v-for="prop in user">{{prop}}</p>
+        <input v-model="user[field]" v-for="(prop,field) in user" />
     </div>
     <div id="app-2">
         <span v-bind:title="message">
             Hover your mouse over me for a few seconds to see my dynamically bound title!
         </span>
     </div>
-
     <div id="app-3">
         <span v-if="seen">Now you see me</span>
     </div>

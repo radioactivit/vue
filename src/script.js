@@ -11,13 +11,23 @@ Vue.use(VueResource);
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Trapil!'
+        message: 'Hello Trapil!',
+        user: {
+            firstname: "jerome",
+            name: "chaaban",
+            age: 18
+        }
     }
 });
 
 setTimeout(() => {
     app.message = "Thanks Trapil";
 }, 2000);
+
+(async () => {
+    await new Promise((resolve, reject) => resolve(112));
+})();
+
 
 var app2 = new Vue({
     el: '#app-2',
